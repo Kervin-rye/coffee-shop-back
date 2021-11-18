@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { Product } from "../models/product";
+import { Product } from '../models/product';
 
 const prisma = new PrismaClient();
 
 // INSERT PRODUCT
 export async function insertProd(req: Request, res: Response) {
-    const product : Product = req.body;
+    const product: Product = req.body;
     try {
         const insertProd = await prisma.product.create({
             data: {
@@ -18,7 +18,7 @@ export async function insertProd(req: Request, res: Response) {
     } catch (error) {
         console.log(error)
     }
-    return res.status(200).json({result: true})
+    return res.status(200).json({ result: true })
 
 }
 
@@ -54,4 +54,20 @@ export async function deleteProd(req: Request, res: Response) {
     } catch (error) {
         console.log(error)
     }
+
 }
+
+// LIST PRODUCTS
+export async function getProducts(req: Request, res: Response) {
+    const allProducts = await prisma.product.findMany();
+    res.json({
+        data: allProducts,
+    });
+}
+
+
+
+
+
+
+
