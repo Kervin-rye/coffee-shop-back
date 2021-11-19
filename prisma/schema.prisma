@@ -11,15 +11,21 @@ datasource db {
 }
 
 model Product {
-  id     Int     @id @default(autoincrement())
-  name   String
-  price  Int
-  orders Order[]
+  id    Int    @id @default(autoincrement())
+  name  String
+  price Int
+}
+
+model Item {
+  id        Int    @id @default(autoincrement())
+  productId Int
+  quantity  Int
+  Order     Order? @relation(fields: [orderId], references: [id])
+  orderId   Int?
 }
 
 model Order {
-  id       Int       @id @default(autoincrement())
-  status   String    @default("pending")
-  quantity Int
-  products Product[]
+  id     Int    @id @default(autoincrement())
+  status String @default("pending")
+  items  Item[]
 }

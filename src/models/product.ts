@@ -1,3 +1,5 @@
+
+
 export interface Product {
     id: number,
     name: string,
@@ -8,5 +10,11 @@ export interface Order {
     id: number,
     status: string,
     quantity: number,
-    productList: [],
+    items: Item[],
+}
+
+export interface Item {
+    id: number,
+    productId: number,
+    quantity: number
 }

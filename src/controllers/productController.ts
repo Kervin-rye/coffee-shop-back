@@ -8,17 +8,16 @@ const prisma = new PrismaClient();
 export async function insertProd(req: Request, res: Response) {
     const product: Product = req.body;
     try {
-        const insertProd = await prisma.product.create({
+        const productCreated = await prisma.product.create({
             data: {
                 name: product.name,
                 price: Number(product.price)
             },
         });
-        console.log(insertProd)
+        return res.status(201).json({ result: productCreated })
     } catch (error) {
-        console.log(error)
+        return res.status(204).json({ error })
     }
-    return res.status(200).json({ result: true })
 
 }
 
@@ -26,7 +25,7 @@ export async function insertProd(req: Request, res: Response) {
 export async function updateProd(req: Request, res: Response) {
     const { id } = req.params;
     try {
-        const updateProd = await prisma.product.update({
+        const productUpdated = await prisma.product.update({
             where: {
                 id: +id
             },
@@ -35,9 +34,9 @@ export async function updateProd(req: Request, res: Response) {
                 price: +req.body.price
             }
         });
-        return res.status(200).send({ data: updateProd })
+        return res.status(200).send({ data: productUpdated })
     } catch (error) {
-        console.log(error)
+        return res.status(304).json({ error })
     }
 }
 
@@ -45,24 +44,29 @@ export async function updateProd(req: Request, res: Response) {
 export async function deleteProd(req: Request, res: Response) {
     const { id } = req.params;
     try {
-        const deleteProd = await prisma.product.delete({
+        const productDeleted = await prisma.product.delete({
             where: {
                 id: +id
             }
         });
-        return res.status(200).send({ data: deleteProd })
+        return res.status(200).send({ data: productDeleted })
     } catch (error) {
-        console.log(error)
+        return res.status(204).json({ error })
     }
 
 }
 
 // LIST PRODUCTS
 export async function getProducts(req: Request, res: Response) {
-    const allProducts = await prisma.product.findMany();
-    res.json({
-        data: allProducts,
-    });
+    try {
+        const allProducts = await prisma.product.findMany();
+        res.json({
+            data: allProducts,
+        });
+        return res.status(200).send({ data: allProducts })
+    } catch (error) {
+        return res.status(204).json({ error })
+    }
 }
 
 
