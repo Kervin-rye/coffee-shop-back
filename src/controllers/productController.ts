@@ -10,6 +10,7 @@ export async function insertProd(req: Request, res: Response) {
     try {
         const productCreated = await prisma.product.create({
             data: {
+                image: product.image,
                 name: product.name,
                 price: Number(product.price)
             },
@@ -32,6 +33,7 @@ export async function updateProd(req: Request, res: Response) {
             data: {
                 ...req.body,
                 price: +req.body.price
+
             }
         });
         return res.status(200).send({ data: productUpdated })

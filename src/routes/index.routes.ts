@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createOrder} from "../controllers/orderController";
+import { createOrder, getOrders, updateOrder} from "../controllers/orderController";
 import { deleteProd, getProducts, insertProd, updateProd } from "../controllers/productController";
 
 const router = Router();
@@ -12,6 +12,8 @@ router.route("/api/products").get(getProducts);
 
 // Orders
 router.route("/api/newOrder").post(createOrder);
+router.route("/api/order/:id").post(updateOrder);
+router.route("/api/orders").get(getOrders);
 
 
 export default router;

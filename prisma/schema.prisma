@@ -13,6 +13,7 @@ datasource db {
 model Product {
   id    Int    @id @default(autoincrement())
   name  String
+  image String
   price Int
 }
 
@@ -26,6 +27,9 @@ model Item {
 
 model Order {
   id     Int    @id @default(autoincrement())
-  status String @default("pending")
+  state String @default("pending")
+  user String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
   items  Item[]
 }
